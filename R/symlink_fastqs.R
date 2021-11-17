@@ -36,15 +36,16 @@ symlink.fastqs <- function(
     if (length(seq.files) == 0) {
       stop("no files matched file ID")
     } else {
+      read1.file <- seq.files[str_detect(seq.files, "[-_\\.]R1[-_\\.]")]
+      read2.file <- seq.files[str_detect(seq.files, "[-_\\.]R2[-_\\.]")]
+      lnName.r1 <- paste(smpl, "R1.fastq.gz", sep = split.pattern)
+      lnName.r2 <- paste(smpl, "R2.fastq.gz", sep = split.pattern)
+      cmd1 <- paste("ln -s", read1.file, lnName.r1)
+      cmd2 <- paste("ln -s", read2.file, lnName.r2)
+      system(cmd1)
+      system(cmd2)
+      check.cmd1 <- paste("zcat", lnName.r1, "| head")
       if (!quiet) { cat("good", sep = "\n") }
     }
-    read1.file <- seq.files[str_detect(seq.files, "_R1_")]
-    read2.file <- seq.files[str_detect(seq.files, "_R2_")]
-    lnName.r1 <- paste(smpl, "R1.fastq.gz", sep = split.pattern)
-    lnName.r2 <- paste(smpl, "R2.fastq.gz", sep = split.pattern)
-    cmd1 <- paste("ln -s", read1.file, lnName.r1)
-    cmd2 <- paste("ln -s", read2.file, lnName.r2)
-    system(cmd1)
-    system(cmd2)
   }
 }
