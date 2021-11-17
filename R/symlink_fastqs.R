@@ -44,8 +44,25 @@ symlink.fastqs <- function(
       cmd2 <- paste("ln -s", read2.file, lnName.r2)
       system(cmd1)
       system(cmd2)
-      check.cmd1 <- paste("zcat", lnName.r1, "| head")
-      if (!quiet) { cat("good", sep = "\n") }
+      check.cmd1 <- paste("zcat", lnName.r1, "2>/dev/null | head -n 1")
+      check1 <- length(system(check.cmd1, intern = TRUE)) > 0
+      check.cmd2 <- paste("zcat", lnName.r2, "2>/dev/null | head -n 1")
+      check2 <- length(system(check.cmd2, intern = TRUE)) > 0
+      if (!quiet & check1 & check2) {
+        cat("good", sep = "\n")
+      } else if (!check1 & check2) {
+        cat(paste0(lnName.r1, " is empty (links to", read1.file, ")"), sep = "\n")
+      } else if (check1 & !check2) {
+        cat(paste0(lnName.r2, " is empty (links to", read2.file, ")"), sep = "\n")
+      } else {
+        cat(
+          paste0(
+            lnName.r1, " and ", lnName.r2,
+            " are empty (link to", read1.file, " and ", read2.file, ", respectively)"
+          ),
+          sep = "\n"
+        )
+      }
     }
   }
 }
