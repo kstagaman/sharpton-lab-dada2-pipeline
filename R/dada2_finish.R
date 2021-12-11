@@ -307,8 +307,7 @@ dada2.finish <- function(
   smpl.tbl <- read.file(metadata.file)
   if ("data.table" %in% class(smpl.tbl)) {
     smpl.col <- smpl.tbl[
-      ,
-      sapply(
+      , sapply(
         .SD,
         function(col) {
           sum(col %in% run.env$sample.names) == length(run.env$sample.names)
@@ -316,7 +315,8 @@ dada2.finish <- function(
       )
     ] %>%
       extract(., .) %>%
-      names()
+      names() %>%
+      extract(1)
     smpl.df <- as.data.frame(smpl.tbl)
     row.names(smpl.df) <- smpl.tbl[[smpl.col]]
   } else {
