@@ -1,7 +1,7 @@
 Package: dada2.pipeline
 Type: Package
 Title: Provides Functions to Easily Replicate the Sharpton Lab dada2 Pipeline
-Version: 0.1.1
+Version: 0.2
 Author: Keaton Stagaman
 Maintainer: Keaton Stagaman <kstagaman@gmail.com>
 Description: This package provides functions for generating a template script and executing the dada2 pipeline as run in the Sharpton Lab at Oregon State University.

@@ -46,7 +46,7 @@ dada2.finish <- function(
   if (build.tree) {
     if (length(suppressWarnings(system("which mothur", intern = T))) == 0) {
       stop(
-        "It appears you are trying to build a phylogenetic tree, but mothur is not installed on your system. Please install mothur and try again."
+        "It appears you are trying to build a phylogenetic tree,\nbut mothur is not installed on your system.\nPlease install mothur and try again. If mothur is installed,\ncheck that it is in your PATH [try Sys.getenv('PATH')].\nSee function add2PATH() [?add2PATH] for adding a directory to your PATH."
       )
     }
     if (is.null(fasttree.path) | !file.exists(fasttree.path)) {

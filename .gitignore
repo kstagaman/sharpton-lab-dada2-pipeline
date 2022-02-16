@@ -4,4 +4,5 @@
 .Ruserdata
 Icon*
 .DS_Store
-
+*output
+dada2_processing.R
