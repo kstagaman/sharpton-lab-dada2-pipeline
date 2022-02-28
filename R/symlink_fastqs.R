@@ -80,7 +80,7 @@ symlink.fastqs <- function(
           )
         }
       } else {
-        ids.dt[Run := "Run1"]
+        ids.dt[, Run := "Run1"]
         run.id.col <- "Run"
       }
     }
@@ -88,6 +88,7 @@ symlink.fastqs <- function(
   setkeyv(ids.dt, smpl.id.col)
   for (run.id in names(seq.dirs)) {
     run.ids.dt <- ids.dt[eval(parse(text = run.id.col)) == run.id]
+    seq.dir <- seq.dirs[run.id]
     for (smpl in run.ids.dt[[smpl.id.col]]) {
       file.id <- run.ids.dt[smpl][[file.id.col]]
       if (!quiet) {
