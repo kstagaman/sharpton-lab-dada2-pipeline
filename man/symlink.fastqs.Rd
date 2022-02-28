@@ -5,16 +5,17 @@
 \title{Symlink Fastqs}
 \usage{
 symlink.fastqs(
-  seq.dir,
+  seq.dirs,
   ids.tbl,
   smpl.id.col = "Sample",
   file.id.col = 2,
+  run.id.col = NULL,
   split.pattern = "--",
   quiet = FALSE
 )
 }
 \arguments{
-\item{seq.dir}{The path to the directory in which the raw sequence files are contained.}
+\item{seq.dirs}{The path(s) to the directory(s) in which the raw sequence files are contained. If there are multiple paths, this needs to be a named vector that is reflected in the ids.tbl provided as well.}
 
 \item{ids.tbl}{A data.frame or data.table containing sample names in one column and their corresponding file IDs in another (e.g. barcodes or sample IDs as used in the raw sequence files). Sample names and file IDs *may* be identical in some instances, please still provide a two column table.}
 
