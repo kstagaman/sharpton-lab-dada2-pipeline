@@ -21,8 +21,6 @@ symlink.fastqs <- function(
   if (length(seq.dirs) > 1) {
     if (is.null(names(seq.dirs))) {
       stop("argument `seq.dirs` is greater than one, but has no run IDs")
-    } else {
-      run.ids <- names(seq.dirs)
     }
   } else {
     names(seq.dirs) <- "Run1"
@@ -44,7 +42,7 @@ symlink.fastqs <- function(
         )
       )
     } else {
-      if (length(run.ids) > 1) {
+      if (length(names(seq.dirs)) > 1) {
         matching.col <- which(apply(ids.dt, 2, function(col) all(run.ids %in% col)))
         if (length(matching.col) == 1) {
           proceed <- readline(
