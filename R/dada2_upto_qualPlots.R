@@ -22,7 +22,7 @@ dada2.upto.qualPlots <- function(
   print(head(list.files(fastq.path), 20))
   cat("Above are the first 20 (or fewer) files in the provided path,", sep = "\n")
   proceed <- readline(
-    prompt = "\tdo you want to proceed? [y/n]: ",
+    prompt = "\tdo you want to proceed? [y/n]: "
   )
   while (!(proceed %in% c("y", "n"))) {
     proceed <- readline(prompt="Please answer y or n: ")
