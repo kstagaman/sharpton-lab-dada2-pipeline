@@ -33,7 +33,7 @@ dada2.finish <- function(
   force = FALSE
 ) {
   if (length(names(run.env)) == 0) {
-    stop("Functions 'initiate.pipeline() and 'dada2.upto.qualPlots()' must be run first.")
+    rlang::abort("Functions 'initiate.pipeline() and 'dada2.upto.qualPlots()' must be run first.")
   }
   if (is.null(user.output.path)) {
     output <- run.env$output.path
@@ -41,16 +41,16 @@ dada2.finish <- function(
     output <- user.output.path
   }
   if (!any(file.exists(list.files(path = output, pattern = "qualPlot.pdf", full.names = T)))) {
-    stop("Function 'dada2.upto.qualPlots()' must be run first.")
+    rlang::abort("Function 'dada2.upto.qualPlots()' must be run first.")
   }
   if (build.tree) {
     if (length(suppressWarnings(system("which mothur", intern = T))) == 0) {
-      stop(
+      rlang::abort(
         "It appears you are trying to build a phylogenetic tree,\nbut mothur is not installed on your system.\nPlease install mothur and try again. If mothur is installed,\ncheck that it is in your PATH [try Sys.getenv('PATH')].\nSee function add2PATH() [?add2PATH] for adding a directory to your PATH."
       )
     }
     if (is.null(fasttree.path) | !file.exists(fasttree.path)) {
-      stop(
+      rlang::abort(
         "It appears you are trying to build a phylogenetic tree, but you have not provided a viable path to FastTree."
       )
     }
@@ -66,7 +66,7 @@ dada2.finish <- function(
       guide.seqs.file %in% list.files() &
       alignment.template.file %in% list.files()
     )) {
-      stop(
+      rlang::abort(
         paste(
           "Files", guide.seqs.file, "and", alignment.template.file,
           "must be in your current directory to build a tree."

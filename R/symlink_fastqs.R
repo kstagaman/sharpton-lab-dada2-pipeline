@@ -20,10 +20,13 @@ symlink.fastqs <- function(
 ) {
   if (length(seq.dirs) > 1) {
     if (is.null(names(seq.dirs))) {
-      stop("argument `seq.dirs` is greater than one, but has no run IDs")
+      rlang::abort("argument `seq.dirs` is greater than one, but has no run IDs")
     }
   } else {
     names(seq.dirs) <- "Run1"
+  }
+  if (!is.null(run.id.col) & length(seq.dirs) == 1) {
+    rlang::warn("\t`seq.dirs` has length 1, but `run.id.col` is not NULL.\n\tThis may result in no symlinks being created.")
   }
   if ("data.table" %in% class(ids.tbl)) {
     ids.dt <- ids.tbl
@@ -33,7 +36,7 @@ symlink.fastqs <- function(
   if (is.null(run.id.col)) {
     smpl.id.counts <- table(ids.dt[[smpl.id.col]])
     if (any(smpl.id.counts > 1)) {
-      stop(
+      rlang::abort(
         paste(
           "The following samples occur more than once in the supplied table:\n\t",
           paste(names(smpl.id.counts[smpl.id.counts > 1]), collapse = "\n\t"),
@@ -62,7 +65,7 @@ symlink.fastqs <- function(
             run.id.col <- names(matching.col)
           }
         } else if (length(matching.col) > 1) {
-          stop(
+          rlang::abort(
             paste0(
               "No run.id.col was provided, but there are multiple seq.dirs,\n",
               "and the names of the seq.dirs match multiple columns in the ids.tbl.\n",
@@ -70,7 +73,7 @@ symlink.fastqs <- function(
             )
           )
         } else {
-          stop(
+          rlang::abort(
             paste0(
               "No run.id.col was provided, but there are multiple seq.dirs,\n",
               "and the names of the seq.dirs don't match any columns in the ids.tbl.\n",
@@ -100,7 +103,7 @@ symlink.fastqs <- function(
         full.names = T
       )
       if (length(seq.files) == 0) {
-        stop("no files matched file ID")
+        rlang::abort("no files matched file ID")
       } else {
         read1.file <- seq.files[str_detect(seq.files, "[-_\\.]R1[-_\\.]")]
         read2.file <- seq.files[str_detect(seq.files, "[-_\\.]R2[-_\\.]")]
@@ -121,12 +124,11 @@ symlink.fastqs <- function(
         } else if (check1 & !check2) {
           cat(paste0(lnName.r2, " is empty (links to", read2.file, ")"), sep = "\n")
         } else {
-          cat(
+          rlang::inform(
             paste0(
               lnName.r1, " and ", lnName.r2,
               " are empty (link to", read1.file, " and ", read2.file, ", respectively)"
-            ),
-            sep = "\n"
+            )
           )
         }
       }
