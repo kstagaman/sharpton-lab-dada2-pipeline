@@ -89,6 +89,7 @@ symlink.fastqs <- function(
     }
   }
   setkeyv(ids.dt, smpl.id.col)
+  bad.ids <- data.table()
   for (run.id in names(seq.dirs)) {
     run.ids.dt <- ids.dt[eval(parse(text = run.id.col)) == run.id]
     seq.dir <- seq.dirs[run.id]
@@ -103,7 +104,11 @@ symlink.fastqs <- function(
         full.names = T
       )
       if (length(seq.files) == 0) {
-        rlang::abort("no files matched file ID")
+        bad.ids <- rbind(
+          bad.ids,
+          data.table(RunID = run.id, FileID = file.id)
+        )
+        cat("no files matched file ID", "\n")
       } else {
         read1.file <- seq.files[str_detect(seq.files, "[-_\\.]R1[-_\\.]")]
         read2.file <- seq.files[str_detect(seq.files, "[-_\\.]R2[-_\\.]")]
@@ -133,5 +138,9 @@ symlink.fastqs <- function(
         }
       }
     }
+  }
+  if (nrow(bad.ids) > 0) {
+    rlang::inform("The following file ids did not find matches in the provided directory for the run ID indicated in the table below:")
+    print(bad.ids)
   }
 }
