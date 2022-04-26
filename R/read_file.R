@@ -13,17 +13,20 @@ read.file <- function(file, has.header = TRUE, ...) {
   if (extension %in% paste0(".", c("tsv", "txt", "csv"))) {
     if (is.null(varargs$sep)) { varargs$sep <- ifelse(extension == ".csv", ",", "\t") }
     return(
-      read.table(
-        file = file,
-        sep = varargs$sep,
-        header = has.header,
-        ...
+      as.data.table(
+        read.table(
+          file = file,
+          sep = varargs$sep,
+          header = has.header,
+          row.names = NULL,
+          ...
+        )
       )
     )
   } else if (extension == ".xls") {
-    return(readxl:read_xls(path =file, ...))
+    return(as.data.table(readxl::read_xls(path = file, ...)))
   } else if (extension == ".xlsx") {
-    return(readxl:read_xlsx(path = file, ...))
+    return(as.data.table(readxl::read_xlsx(path = file, ...)))
   } else if (extension == ".rds") {
     return(readRDS(file = file))
   } else {

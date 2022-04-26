@@ -322,7 +322,15 @@ dada2.finish <- function(
   } else {
     smpl.df <- smpl.tbl
   }
-
+  matching.names <- identical(
+    sort(row.names(smpl.df)),
+    sort(run.env$sample.names)
+  )
+  if (!matching.names) {
+    rlang::abort(
+      "The sample names supplied in the `metadata.file` do not match the sample names detected from sequence file during processing."
+    )
+  }
   smpl.df <- smpl.df[run.env$sample.names, , drop=F]
   ps0 <- phyloseq(
     otu_table(seqtab.nochim, taxa_are_rows = FALSE),
