@@ -328,7 +328,7 @@ dada2.finish <- function(
   )
   if (!matching.names) {
     rlang::abort(
-      "The sample names supplied in the `metadata.file` do not match the sample names detected from sequence file during processing."
+      "The sample names supplied in the `metadata.file` do not match the sample names detected from sequence files during processing."
     )
   }
   smpl.df <- smpl.df[run.env$sample.names, , drop=F]
