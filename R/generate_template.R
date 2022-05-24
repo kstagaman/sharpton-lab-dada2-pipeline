@@ -1,7 +1,7 @@
 #' Generate Pipeline Template
 #'
 #' Generate an R script template for running the Sharpton Lab dada2 pipeline
-#' @param filename A string to name the resulting template. If the .R extension is not included in the filename, it will be appended. Defaut is "dada2_processing.R"
+#' @param filename A string to name the resulting template. If the .R extension is not included in the filename, it will be appended. Default is "dada2_processing.R"
 #' @export
 #' @examples
 #' generate.template()
