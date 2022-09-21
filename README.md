@@ -15,14 +15,14 @@ for (pkg in c("dada2", "phyloseq", "ALDEx2")) {
     BiocManager::install(pkg)
   }
 }
-devtools::install_github("ggloor/CoDaSeq/CoDaSeq")
-devtools::install_github("kstagaman/phyloseqCompanion")
+remotes::install_github("ggloor/CoDaSeq/CoDaSeq")
+remotes::install_github("kstagaman/phyloseqCompanion")
 ```
 
 This package can be installed by running the following
 
 ```
-devtools::install_github("kstagaman/sharpton-lab-dada2-pipeline")
+remotes::install_github("kstagaman/sharpton-lab-dada2-pipeline")
 ```
 
 To get started, first generate the template script by running in your working directory.
